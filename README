@@ -1,3 +1,89 @@
 Xianino: Experiment in microtonality without leaving your keyboard!
 
+==Introduction==
+
+In its current state Xianino is configurable only though python code.
+You will need to modify xianino.py to change the midi output device,
+key mappings or scale. In a future addition I hope that these parameters
+will be accesible through the interface at runtime. This project was
+inspired by an email request for help using FretFind from a blind 
+Russian microtonalist named Eugene. An ideal GUI for Xianino would be 
+usable via screen readers and other accessibility tools. 
+
+==Architectural Overview==
+
+Scale
+A Scale is a callable object that transforms a scale step or index 
+into a frequency. There are currently two implementations of Scale
+included in Xianino: ETScale and ScalaScale. ETScale produces an
+equal temperament scale (dividing the octive into equal steps).
+ETScale(12) produces a common 12 tone ET scale. ScalaScale allow 
+much more flexibilty in specifying the scale steps. Please refer
+to the Scala documentation for the scale syntax. The Scala website
+also provides a large library of scale files for your use.
+http://www.huygens-fokker.org/scala/scl_format.html
+
+MidiBrain
+The MidiBrain object manages all MIDI communication. An output device
+must be selected for use. The MidiBrain object responds to requests
+to play a frequency. It chooses a MIDI channel that is not currently
+producing sound and tunes the channel using pitch bend messages so
+that the channel is able to produce the requested frequency. If no
+channel is avalable it returns a NoFreeChannel exception. When it 
+receives a request to silence a frequency it returns the channel back
+to the usable pool. This method of microtonal tuning is widely 
+compatible but it limits the available poliphony.
+
+Piano
+A Piano object handles user interaction turning key presses into
+frequencies and sending requests to the MidiBrain object. Two 
+implementations of Piano are available with Xianino, TKPiano and 
+PGPiano, which utilize Tkinter and Pygame respectively. Piano
+objects have two important configurable attributes: keys and 
+scale. Piano.scale should be set to a Scale object as described
+above. Piano.keys should be assigned a character string representing
+playable keys. Order of the keys in the string translates to the index
+passed to the Scale object. Using these to attributes it is possible 
+to assign arbitrary frequencies to keys on the keyboard.
+
+==Examples==
+
+Assign whole available keyboard to the notes of the 12tet scale A=440
+
+piano.keys = '''zxcvbnm,./asdfghjkl;'qwertyuiop[]\`1234567890-='''
+piano.scale = ETScale(12, 25.5)
+
+Assign the two 12tet scale that are slightly out of tune
+one to the Z key row (as white keys with black keys in the A key row above)
+another to the W key row (similarly)
+
+scale = '''test
+25
+100.
+200.
+300.
+400.
+500.
+600.
+700.
+800.
+900.
+1000.
+1100.
+1200.
+0.
+112.
+204.
+316.
+386.
+498.
+590. #610.
+702.
+814.
+884.
+996.
+1088.
+1200.'''
+piano.scale = ScalaScale(scale, 55.0)
+piano.keys = 'zsxdcvgbhnjm,w3e4rt6y7u8io'
 
