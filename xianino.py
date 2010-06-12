@@ -21,8 +21,9 @@ mb.init()
 
 midi_brain = mb.MidiBrain()
 
+outdev=2
+#uncomment none for device selection
 #outdev=None
-outdev=0
 
 try:
     if outdev is None:

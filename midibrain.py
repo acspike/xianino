@@ -1,10 +1,10 @@
-import pypm
+import pygame.midi
 import math, time
 
 def init():
-    pypm.Initialize()
+    pygame.midi.init()
 def quit():
-    pypm.Terminate()
+    pygame.midi.quit()
     
 class NoFreeChannel(Exception):
     pass
@@ -43,7 +43,7 @@ class MidiBrain(object):
     def _write(self, status, data1, data2):
         if not self.midi_output_port:
             return
-        self.midi_output_port.Write([[[status, data1, data2],pypm.Time()]])
+        self.midi_output_port.write([[[status, data1, data2],pygame.midi.time()]])
     
     def _get_channel(self):
         try:
@@ -69,8 +69,8 @@ class MidiBrain(object):
 
     def _get_midi_ports(self):
         ports = []
-        for index in range(pypm.CountDevices()):
-            interface, name, input, output, in_use = pypm.GetDeviceInfo(index)
+        for index in range(pygame.midi.get_count()):
+            interface, name, input, output, in_use = pygame.midi.get_device_info(index)
             if input:
                 direction = 'input'
             else:
@@ -82,7 +82,7 @@ class MidiBrain(object):
         return [port for port in self._get_midi_ports() if port.direction=='output' and not port.in_use]
     
     def open_midi_output_port(self, device_index, latency=20):
-        self.midi_output_port = pypm.Output(device_index, latency)
+        self.midi_output_port = pygame.midi.Output(device_index, latency=latency)
         for channel in self._get_all_channels():
             #set course pitch bend range in semitones
             self._write(0xB0+channel,6,self.pitch_bend_range_semitones)
