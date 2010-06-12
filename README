@@ -29,7 +29,7 @@ must be selected for use. The MidiBrain object responds to requests
 to play a frequency. It chooses a MIDI channel that is not currently
 producing sound and tunes the channel using pitch bend messages so
 that the channel is able to produce the requested frequency. If no
-channel is avalable it returns a NoFreeChannel exception. When it 
+channel is avalable it raises a NoFreeChannel exception. When it 
 receives a request to silence a frequency it returns the channel back
 to the usable pool. This method of microtonal tuning is widely 
 compatible but it limits the available poliphony.
@@ -53,7 +53,7 @@ Assign whole available keyboard to the notes of the 12tet scale A=440
 piano.keys = '''zxcvbnm,./asdfghjkl;'qwertyuiop[]\`1234567890-='''
 piano.scale = ETScale(12, 25.5)
 
-Assign the two 12tet scale that are slightly out of tune
+Assign two 12tet scales that are slightly out of tune
 one to the Z key row (as white keys with black keys in the A key row above)
 another to the W key row (similarly)
 
