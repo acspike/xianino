@@ -53,7 +53,7 @@ Assign whole available keyboard to the notes of the 12tet scale A=440
 piano.keys = '''zxcvbnm,./asdfghjkl;'qwertyuiop[]\`1234567890-='''
 piano.scale = ETScale(12, 25.5)
 
-Assign two 12tet scales that are slightly out of tune
+Assign two 12 tone scales that vary slightly
 one to the Z key row (as white keys with black keys in the A key row above)
 another to the W key row (similarly)
 
@@ -77,7 +77,7 @@ scale = '''test
 316.
 386.
 498.
-590. #610.
+590.
 702.
 814.
 884.
