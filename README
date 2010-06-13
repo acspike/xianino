@@ -57,7 +57,7 @@ Assign two 12 tone scales that vary slightly
 one to the Z key row (as white keys with black keys in the A key row above)
 another to the W key row (similarly)
 
-scale = '''test
+scale = '''two 12 tone chromatic scales
 25
 100.
 200.
@@ -87,3 +87,64 @@ scale = '''test
 piano.scale = ScalaScale(scale, 55.0)
 piano.keys = 'zsxdcvgbhnjm,w3e4rt6y7u8io'
 
+Three major scales extracted from 12tet, 19tet and 31tet respectively
+
+scale = '''3 major scales (12tet, 19tet and 31tet)
+23
+200.
+400.
+500.
+700.
+900.
+1100.
+1200.
+0.
+189.473684210526
+378.947368421053
+505.263157894737
+694.736842105263
+884.21052631579
+1073.68421052632
+1200.
+0.
+193.548387096774
+387.096774193548
+503.225806451613
+696.774193548387
+890.322580645161
+1083.87096774194
+1200.'''
+piano.scale = ScalaScale(scale, 55.0)
+piano.keys = 'zxcvbnm,asdfghjkqwertyui'
+
+Assign the alphabet keys to play the notes of the alphabet song
+
+scale = '''alphabet song
+25
+0.
+700.
+700.
+900.
+900.
+700.
+500.
+500.
+400.
+400.
+200.
+200.
+200.
+200.
+0.
+700.
+700.
+500.
+400.
+400.
+200.
+700.
+500.
+400.
+200.'''
+piano.scale = ScalaScale(scale, 55.0)
+piano.keys = 'abcdefghijklmnopqrstuvwxyz'
